@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import bg from './assets/images/bg.jpg';
+import characterData from './assets/data';
 import Header from './components/Header';
 import Menu from './components/Menu';
 
@@ -25,7 +26,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <Menu characters={[]} menu={menu} />
+      <Menu characters={characterData} menu={menu} />
       <img
         className="bg-image"
         src={bg}

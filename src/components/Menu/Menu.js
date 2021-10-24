@@ -19,7 +19,10 @@ const Menu = (props) => {
     >
       <S.BtnCloseMenu>x</S.BtnCloseMenu>
       {characters.map((character) => (
-        <S.MenuItem key={character}>{character}</S.MenuItem>
+        <S.MenuItem key={character.name}>
+          <img src={character.image} alt={character.name} />
+          <span>{character.name}</span>
+        </S.MenuItem>
       ))}
     </S.MenuContainer>
   );
