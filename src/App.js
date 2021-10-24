@@ -1,11 +1,16 @@
 import './App.css';
 import Header from './components/Header';
+import bg from './assets/images/bg.jpg';
 
 const App = () => {
   return (
     <div className="App">
       <Header />
-      <h1>Where's Waldo?</h1>
+      <img
+        className="bg-image"
+        src={bg}
+        alt="Artwork with various characters"
+      />
     </div>
   );
 };

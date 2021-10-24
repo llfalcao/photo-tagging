@@ -1,0 +1,13 @@
+.App {
+  width: 100%;
+}
+
+.bg-image {
+  width: 100%;
+}
+
+@media (min-width: 1920px) {
+  .App {
+    max-width: 1920px;
+  }
+}
