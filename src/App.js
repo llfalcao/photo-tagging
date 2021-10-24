@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
-import Header from './components/Header';
 import bg from './assets/images/bg.jpg';
+import Header from './components/Header';
 import Menu from './components/Menu';
 
 const App = () => {

@@ -1,3 +1,4 @@
+import Scoreboard from '../Scoreboard';
 import * as S from './styles';
 
 const Header = () => {
@@ -6,6 +7,7 @@ const Header = () => {
       <h1>Where's...</h1>
       <p>How to play</p>
       <p>GitHub</p>
+      <Scoreboard />
     </S.Header>
   );
 };
