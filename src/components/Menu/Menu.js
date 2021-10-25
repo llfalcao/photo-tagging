@@ -1,13 +1,14 @@
 import * as S from './styles';
 
 const Menu = (props) => {
-  const { characters, menu, onMenuItemClick, onCloseMenu } = props;
+  const { menu, onMenuItemClick, onCloseMenu } = props;
 
   return (
     <S.MenuContainer
       style={{
         top: menu.location.y,
         left: menu.location.x,
+        display: menu.isDisabled || menu.isHidden ? 'none' : 'block',
       }}
     >
       <S.BtnCloseMenu onClick={onCloseMenu}>
@@ -21,7 +22,7 @@ const Menu = (props) => {
         </svg>
       </S.BtnCloseMenu>
 
-      {characters.map((character) => (
+      {menu.characters.map((character) => (
         <S.MenuItem
           key={character.id}
           onClick={() => onMenuItemClick(character.id)}

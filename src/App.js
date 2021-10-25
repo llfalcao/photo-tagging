@@ -56,8 +56,15 @@ const locationData = [
 
 const App = () => {
   const [menu, setMenu] = useState({
+    characters: characterData,
     isHidden: true,
     location: { y: 0, x: 0 },
+    isDisabled: false,
+  });
+
+  const [score, setScore] = useState({
+    current: 0,
+    max: characterData.length,
   });
 
   // Close menu by pressing Esc
@@ -80,7 +87,7 @@ const App = () => {
     const headerOffset = document.getElementById('header').scrollHeight;
     const x = e.clientX - rect.left;
     const y = e.clientY + headerOffset - rect.top;
-    setMenu({ isHidden: false, location: { y, x } });
+    setMenu({ ...menu, isHidden: false, location: { y, x } });
   };
 
   const getOffsetPercentage = () => {
@@ -109,6 +116,15 @@ const App = () => {
 
     if (result.length > 0) {
       console.log(`Found ${name}!`);
+      const { current, max } = score;
+      const { characters } = menu;
+      setScore({ ...score, current: current + 1 });
+      setMenu({
+        ...menu,
+        characters: characters.filter((el) => el.id !== name),
+        isHidden: true,
+        isDisabled: current + 1 === max ? true : false,
+      });
     } else {
       console.log('No one around here');
       setMenu({ ...menu, isHidden: true });
@@ -122,16 +138,12 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
-      {menu.isHidden ? null : (
-        <Menu
-          characters={characterData}
-          menu={menu}
-          onMenuItemClick={onMenuItemClick}
-          onCloseMenu={onCloseMenu}
-        />
-      )}
-
+      <Header score={score} />
+      <Menu
+        menu={menu}
+        onMenuItemClick={onMenuItemClick}
+        onCloseMenu={onCloseMenu}
+      />
       <img
         className="bg-image"
         src={bg}
