@@ -9,6 +9,7 @@ export const MenuContainer = styled.ul`
   box-shadow: 0 0 5px #000;
   background: #1a1a1b;
   color: #e5e5e5;
+  z-index: 1;
 `;
 
 export const MenuItem = styled.li`

@@ -67,6 +67,8 @@ const App = () => {
     max: characterData.length,
   });
 
+  const [markers, setMarkers] = useState([]);
+
   // Close menu by pressing Esc
   useEffect(() => {
     const close = (e) => {
@@ -87,7 +89,8 @@ const App = () => {
     const headerOffset = document.getElementById('header').scrollHeight;
     const x = e.clientX - rect.left;
     const y = e.clientY + headerOffset - rect.top;
-    setMenu({ ...menu, isHidden: false, location: { y, x } });
+
+    setMenu({ ...menu, isHidden: false, location: { x, y } });
   };
 
   const getOffsetPercentage = () => {
@@ -100,6 +103,22 @@ const App = () => {
       Math.round((location.x * 100) / image.width),
       Math.round((location.y * 100) / image.height),
     ];
+  };
+
+  const updateCharacterList = (currentScore, maxScore, name) => {
+    const { characters } = menu;
+    setMenu({
+      ...menu,
+      characters: characters.filter((el) => el.id !== name),
+      isHidden: true,
+      isDisabled: currentScore + 1 === maxScore ? true : false,
+    });
+  };
+
+  const markCharacter = (x, y) => {
+    const newMarkers = [...markers];
+    newMarkers.push([x, y]);
+    setMarkers(newMarkers);
   };
 
   const onMenuItemClick = (name) => {
@@ -117,14 +136,9 @@ const App = () => {
     if (result.length > 0) {
       console.log(`Found ${name}!`);
       const { current, max } = score;
-      const { characters } = menu;
       setScore({ ...score, current: current + 1 });
-      setMenu({
-        ...menu,
-        characters: characters.filter((el) => el.id !== name),
-        isHidden: true,
-        isDisabled: current + 1 === max ? true : false,
-      });
+      updateCharacterList(current, max, name);
+      markCharacter(x, y);
     } else {
       console.log('No one around here');
       setMenu({ ...menu, isHidden: true });
@@ -139,17 +153,34 @@ const App = () => {
   return (
     <div className="App">
       <Header score={score} />
-      <Menu
-        menu={menu}
-        onMenuItemClick={onMenuItemClick}
-        onCloseMenu={onCloseMenu}
-      />
       <img
         className="bg-image"
         src={bg}
         alt="Artwork with various characters"
         onClick={toggleMenu}
       />
+      <Menu
+        menu={menu}
+        onMenuItemClick={onMenuItemClick}
+        onCloseMenu={onCloseMenu}
+      />
+      {markers.map((mark, i) => (
+        <svg
+          key={i}
+          style={{
+            position: 'absolute',
+            fill: 'green',
+            stroke: 'white',
+            left: `calc(${mark[0]}% - 1vw)`,
+            top: `calc(${mark[1]}% - 4vh)`,
+            width: '4vw',
+          }}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
+        </svg>
+      ))}
     </div>
   );
 };
