@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import bg from './assets/images/bg.jpg';
 import characterData from './assets/data';
@@ -60,6 +60,17 @@ const App = () => {
     location: { y: 0, x: 0 },
   });
 
+  // Close menu by pressing Esc
+  useEffect(() => {
+    const close = (e) => {
+      if (e.key.toLowerCase() === 'escape') {
+        setMenu({ ...menu, isHidden: true });
+      }
+    };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, [menu]);
+
   const toggleMenu = (e) => {
     if (!menu.isHidden) {
       setMenu({ ...menu, isHidden: true });
@@ -104,14 +115,23 @@ const App = () => {
     }
   };
 
+  // Close menu by clicking the X button
+  const onCloseMenu = () => {
+    setMenu({ ...menu, isHidden: true });
+  };
+
   return (
     <div className="App">
       <Header />
-      <Menu
-        characters={characterData}
-        menu={menu}
-        onMenuItemClick={onMenuItemClick}
-      />
+      {menu.isHidden ? null : (
+        <Menu
+          characters={characterData}
+          menu={menu}
+          onMenuItemClick={onMenuItemClick}
+          onCloseMenu={onCloseMenu}
+        />
+      )}
+
       <img
         className="bg-image"
         src={bg}

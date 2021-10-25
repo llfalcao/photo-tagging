@@ -1,17 +1,16 @@
 import * as S from './styles';
 
 const Menu = (props) => {
-  const { characters, menu, onMenuItemClick } = props;
+  const { characters, menu, onMenuItemClick, onCloseMenu } = props;
 
   return (
     <S.MenuContainer
       style={{
         top: menu.location.y,
         left: menu.location.x,
-        display: menu.isHidden ? 'none' : 'block',
       }}
     >
-      <S.BtnCloseMenu>
+      <S.BtnCloseMenu onClick={onCloseMenu}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"

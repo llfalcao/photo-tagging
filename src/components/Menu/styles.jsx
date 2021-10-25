@@ -46,10 +46,9 @@ export const BtnCloseMenu = styled.button`
   height: 20px;
   margin: 0 0 4px auto;
   border-radius: 100%;
-  background: transparent;
+  background: none;
   fill: crimson;
   display: flex;
   justify-content: center;
   cursor: pointer;
-  object-fit: contain;
 `;
