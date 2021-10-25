@@ -2,17 +2,19 @@ import styled from 'styled-components';
 
 export const MenuContainer = styled.ul`
   position: absolute;
+  margin: 5px 0 0 5px;
   padding: 4px;
   border: 1px solid #111;
   border-radius: 0.5rem;
   box-shadow: 0 0 5px #000;
-  background: #e5e5e5;
-  color: #000000;
+  background: #1a1a1b;
+  color: #e5e5e5;
 `;
 
 export const MenuItem = styled.li`
-  padding: 0.5rem;
-  border-bottom: 1px solid #bbb;
+  padding: 0.1rem 0.5rem;
+  margin: 0.1rem 0;
+  border-radius: 0.2rem;
   cursor: pointer;
 
   &:last-child {
@@ -20,7 +22,7 @@ export const MenuItem = styled.li`
   }
 
   &:hover {
-    background: #d5d5d5;
+    background: #2d3033;
   }
 
   & img,
@@ -42,12 +44,12 @@ export const MenuItem = styled.li`
 export const BtnCloseMenu = styled.button`
   width: 20px;
   height: 20px;
-  margin: 0 0 2px auto;
-  padding-top: 1px;
+  margin: 0 0 4px auto;
   border-radius: 100%;
-  background: #111;
-  color: #fff;
+  background: transparent;
+  fill: crimson;
   display: flex;
   justify-content: center;
   cursor: pointer;
+  object-fit: contain;
 `;
