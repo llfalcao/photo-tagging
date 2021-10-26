@@ -4,6 +4,7 @@ import bg from './assets/images/bg.jpg';
 import characterData from './assets/data';
 import Header from './components/Header';
 import Menu from './components/Menu';
+import Message from './components/Message';
 
 // TODO: Retrieve data from Firebase
 const locationData = [
@@ -69,6 +70,12 @@ const App = () => {
 
   const [markers, setMarkers] = useState([]);
 
+  const [selectionMsg, setSelectionMsg] = useState({
+    visible: false,
+    isCorrect: false,
+    character: '',
+  });
+
   // Close menu by pressing Esc
   useEffect(() => {
     const close = (e) => {
@@ -121,12 +128,12 @@ const App = () => {
     setMarkers(newMarkers);
   };
 
-  const onMenuItemClick = (name) => {
+  const onMenuItemClick = (id, name) => {
     const offset = getOffsetPercentage();
     const [x, y] = [offset[0], offset[1]];
     const result = locationData.filter(
       (character) =>
-        character.name === name &&
+        character.name === id &&
         x >= character.location.x0 &&
         x <= character.location.x1 &&
         y >= character.location.y0 &&
@@ -137,10 +144,17 @@ const App = () => {
       console.log(`Found ${name}!`);
       const { current, max } = score;
       setScore({ ...score, current: current + 1 });
-      updateCharacterList(current, max, name);
+      updateCharacterList(current, max, id);
+      setSelectionMsg({
+        ...selectionMsg,
+        visible: true,
+        isCorrect: true,
+        character: name,
+      });
       markCharacter(x, y);
     } else {
       console.log('No one around here');
+      setSelectionMsg({ ...selectionMsg, visible: true, isCorrect: false });
       setMenu({ ...menu, isHidden: true });
     }
   };
@@ -148,6 +162,10 @@ const App = () => {
   // Close menu by clicking the X button
   const onCloseMenu = () => {
     setMenu({ ...menu, isHidden: true });
+  };
+
+  const hideMessage = () => {
+    setSelectionMsg({ ...selectionMsg, visible: false });
   };
 
   return (
@@ -164,6 +182,7 @@ const App = () => {
         onMenuItemClick={onMenuItemClick}
         onCloseMenu={onCloseMenu}
       />
+
       {markers.map((mark, i) => (
         <svg
           key={i}
@@ -181,6 +200,10 @@ const App = () => {
           <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
         </svg>
       ))}
+
+      {selectionMsg.visible ? (
+        <Message msg={selectionMsg} hideMessage={hideMessage} />
+      ) : null}
     </div>
   );
 };

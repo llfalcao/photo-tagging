@@ -25,7 +25,7 @@ const Menu = (props) => {
       {menu.characters.map((character) => (
         <S.MenuItem
           key={character.id}
-          onClick={() => onMenuItemClick(character.id)}
+          onClick={() => onMenuItemClick(character.id, character.name)}
         >
           <img src={character.image} alt={character.name} />
           <span>{character.name}</span>
