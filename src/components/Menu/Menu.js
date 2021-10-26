@@ -1,7 +1,7 @@
 import * as S from './styles';
 
 const Menu = (props) => {
-  const { menu, onMenuItemClick, onCloseMenu } = props;
+  const { menu, onMenuItemClick, hideMenu } = props;
 
   return (
     <S.MenuContainer
@@ -11,7 +11,7 @@ const Menu = (props) => {
         display: menu.isDisabled || menu.isHidden ? 'none' : 'block',
       }}
     >
-      <S.BtnCloseMenu onClick={onCloseMenu}>
+      <S.BtnCloseMenu onClick={hideMenu}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"

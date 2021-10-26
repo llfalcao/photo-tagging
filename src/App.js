@@ -2,58 +2,10 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import bg from './assets/images/bg.jpg';
 import characterData from './assets/data';
+import locationData from './web';
 import Header from './components/Header';
 import Menu from './components/Menu';
 import Message from './components/Message';
-
-// TODO: Retrieve data from Firebase
-const locationData = [
-  {
-    name: 'batman',
-    location: {
-      x0: 10,
-      x1: 14,
-      y0: 68,
-      y1: 70,
-    },
-  },
-  {
-    name: 'kratos',
-    location: {
-      x0: 57,
-      x1: 62,
-      y0: 88,
-      y1: 89,
-    },
-  },
-  {
-    name: 'link',
-    location: {
-      x0: 22,
-      x1: 27,
-      y0: 96,
-      y1: 97,
-    },
-  },
-  {
-    name: 'patrick',
-    location: {
-      x0: 65,
-      x1: 69,
-      y0: 78,
-      y1: 79,
-    },
-  },
-  {
-    name: 'gundam',
-    location: {
-      x0: 75,
-      x1: 80,
-      y0: 91,
-      y1: 94,
-    },
-  },
-];
 
 const App = () => {
   const [menu, setMenu] = useState({
@@ -131,36 +83,33 @@ const App = () => {
   const onMenuItemClick = (id, name) => {
     const offset = getOffsetPercentage();
     const [x, y] = [offset[0], offset[1]];
-    const result = locationData.filter(
-      (character) =>
-        character.name === id &&
-        x >= character.location.x0 &&
-        x <= character.location.x1 &&
-        y >= character.location.y0 &&
-        y <= character.location.y1,
-    );
-
-    if (result.length > 0) {
-      console.log(`Found ${name}!`);
-      const { current, max } = score;
-      setScore({ ...score, current: current + 1 });
-      updateCharacterList(current, max, id);
-      setSelectionMsg({
-        ...selectionMsg,
-        visible: true,
-        isCorrect: true,
-        character: name,
+    locationData
+      .then((data) =>
+        data.filter(
+          (character) =>
+            character.name === id &&
+            x >= character.location.x0 &&
+            x <= character.location.x1 &&
+            y >= character.location.y0 &&
+            y <= character.location.y1,
+        ),
+      )
+      .then((result) => {
+        if (result.length > 0) {
+          const { current, max } = score;
+          setScore({ ...score, current: current + 1 });
+          updateCharacterList(current, max, id);
+          markCharacter(x, y);
+          setSelectionMsg({ visible: true, isCorrect: true, character: name });
+        } else {
+          setSelectionMsg({ ...selectionMsg, visible: true, isCorrect: false });
+          setMenu({ ...menu, isHidden: true });
+        }
       });
-      markCharacter(x, y);
-    } else {
-      console.log('No one around here');
-      setSelectionMsg({ ...selectionMsg, visible: true, isCorrect: false });
-      setMenu({ ...menu, isHidden: true });
-    }
   };
 
   // Close menu by clicking the X button
-  const onCloseMenu = () => {
+  const hideMenu = () => {
     setMenu({ ...menu, isHidden: true });
   };
 
@@ -177,11 +126,7 @@ const App = () => {
         alt="Artwork with various characters"
         onClick={toggleMenu}
       />
-      <Menu
-        menu={menu}
-        onMenuItemClick={onMenuItemClick}
-        onCloseMenu={onCloseMenu}
-      />
+      <Menu menu={menu} onMenuItemClick={onMenuItemClick} hideMenu={hideMenu} />
 
       {markers.map((mark, i) => (
         <svg
