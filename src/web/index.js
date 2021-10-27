@@ -1,6 +1,11 @@
 import { initializeApp } from 'firebase/app';
 import { getFirebaseConfig } from './firebase-config';
-import { getDocs, collection, getFirestore } from 'firebase/firestore';
+import {
+  getDocs,
+  collection,
+  getFirestore,
+  Timestamp,
+} from 'firebase/firestore';
 
 async function getCharacters(db) {
   const characters = collection(db, 'characters');
@@ -9,8 +14,16 @@ async function getCharacters(db) {
   return characterList;
 }
 
+function getCurrentTime() {
+  return Timestamp.now();
+}
+
+function secToDate(time) {
+  return time.toDate();
+}
+
 const app = initializeApp(getFirebaseConfig());
 const db = getFirestore(app);
 const locationData = getCharacters(db);
 
-export default locationData;
+export { locationData, getCurrentTime, secToDate };

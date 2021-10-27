@@ -1,7 +1,9 @@
 import { useState } from 'react/cjs/react.development';
 import * as S from './styles';
 
-const WinnerModal = () => {
+const WinnerModal = ({ time }) => {
+  const { total } = time;
+
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(true);
 
@@ -29,6 +31,7 @@ const WinnerModal = () => {
       {visible ? (
         <S.ModalContainer>
           <S.Title>You win!</S.Title>
+          <S.Subtitle>Total time: {total}</S.Subtitle>
           <S.Form onSubmit={handleSubmit}>
             <S.Legend>
               Save your game time:

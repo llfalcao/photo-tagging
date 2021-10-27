@@ -1,15 +1,15 @@
 import * as S from './styles';
 
-const Message = ({ msg, hideMessage }) => {
+const Message = ({ msg, hideNotification }) => {
   if (msg.isCorrect) {
     return (
-      <S.MsgCorrect onAnimationEnd={hideMessage}>
+      <S.MsgCorrect onAnimationEnd={hideNotification}>
         You found {msg.character}!
       </S.MsgCorrect>
     );
   } else {
     return (
-      <S.MsgIncorrect onAnimationEnd={hideMessage}>
+      <S.MsgIncorrect onAnimationEnd={hideNotification}>
         The character selected is not here.
       </S.MsgIncorrect>
     );

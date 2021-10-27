@@ -36,6 +36,11 @@ export const Title = styled.p`
   margin-bottom: 1rem;
 `;
 
+export const Subtitle = styled.p`
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+`;
+
 export const Form = styled.form`
   width: 100%;
   display: flex;
@@ -79,15 +84,16 @@ export const Input = styled.input`
 
 export const Label = styled.label`
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-200%, -130%);
+  left: 0.5rem;
+  top: 0.2rem;
   font-size: 0.7rem;
   color: #287ecf;
   transition: 0.2s ease all;
   pointer-events: none;
 
   ${Input}:placeholder-shown:not(:focus) ~ & {
+    left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
     font-size: 1rem;
     color: #999;

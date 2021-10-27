@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import bg from './assets/images/bg.jpg';
 import characterData from './assets/data';
-import locationData from './web';
+import { locationData, getCurrentTime, secToDate } from './web';
 import Header from './components/Header';
 import Menu from './components/Menu';
-import Message from './components/Message';
+import Notification from './components/Notification';
 import WinnerModal from './components/WinnerModal';
 
 const App = () => {
+  const [time, setTime] = useState();
+
   const [menu, setMenu] = useState({
     characters: characterData,
     isHidden: true,
@@ -23,7 +25,7 @@ const App = () => {
 
   const [markers, setMarkers] = useState([]);
 
-  const [selectionMsg, setSelectionMsg] = useState({
+  const [notification, setNotification] = useState({
     visible: false,
     isCorrect: false,
     character: '',
@@ -40,6 +42,18 @@ const App = () => {
     return () => window.removeEventListener('keydown', close);
   }, [menu]);
 
+  // Set initial time and date when the game starts
+  useEffect(() => {
+    const timestamp = getCurrentTime();
+    setTime({
+      start: timestamp.seconds,
+      end: 0,
+      date: secToDate(timestamp),
+      total: 0,
+    });
+  }, []);
+
+  // Display or hide the menu by clicking the image
   const toggleMenu = (e) => {
     if (score.current === score.max) return;
 
@@ -55,6 +69,7 @@ const App = () => {
     setMenu({ ...menu, isHidden: false, location: { x, y } });
   };
 
+  // Calculates the click position independent of screen resolution
   const getOffsetPercentage = () => {
     const { location } = menu;
     const image = document
@@ -67,6 +82,7 @@ const App = () => {
     ];
   };
 
+  // Remove character from the list once found
   const updateCharacterList = (currentScore, maxScore, name) => {
     const { characters } = menu;
     setMenu({
@@ -77,12 +93,31 @@ const App = () => {
     });
   };
 
+  // Display marker above characters found
   const markCharacter = (x, y) => {
     const newMarkers = [...markers];
     newMarkers.push([x, y]);
     setMarkers(newMarkers);
   };
 
+  // Parse seconds
+  const secsToTime = (secs) => {
+    const hours = Math.floor(secs / (60 * 60));
+    const minutes = Math.floor(secs / 60);
+    const seconds = Math.floor(secs % 60);
+    const obj = {
+      h: hours.toString().length === 1 ? `0${hours}` : hours,
+      m: minutes.toString().length === 1 ? `0${minutes}` : minutes,
+      s: seconds.toString().length === 1 ? `0${seconds}` : seconds,
+    };
+    return obj;
+  };
+
+  const formatTime = (obj) => {
+    return `${obj.h}:${obj.m}:${obj.s}`;
+  };
+
+  // Handle character selection from the menu
   const onMenuItemClick = (id, name) => {
     const offset = getOffsetPercentage();
     const [x, y] = [offset[0], offset[1]];
@@ -103,9 +138,15 @@ const App = () => {
           setScore({ ...score, current: current + 1 });
           updateCharacterList(current, max, id);
           markCharacter(x, y);
-          setSelectionMsg({ visible: true, isCorrect: true, character: name });
+          setNotification({ visible: true, isCorrect: true, character: name });
+          if (current + 1 === max) {
+            const endTime = getCurrentTime().seconds;
+            const total = secsToTime(endTime - time.start);
+            const formattedTime = formatTime(total);
+            setTime({ ...time, end: endTime, total: formattedTime });
+          }
         } else {
-          setSelectionMsg({ ...selectionMsg, visible: true, isCorrect: false });
+          setNotification({ ...notification, visible: true, isCorrect: false });
           setMenu({ ...menu, isHidden: true });
         }
       });
@@ -116,8 +157,8 @@ const App = () => {
     setMenu({ ...menu, isHidden: true });
   };
 
-  const hideMessage = () => {
-    setSelectionMsg({ ...selectionMsg, visible: false });
+  const hideNotification = () => {
+    setNotification({ ...notification, visible: false });
   };
 
   return (
@@ -149,11 +190,13 @@ const App = () => {
         </svg>
       ))}
 
-      {selectionMsg.visible ? (
-        <Message msg={selectionMsg} hideMessage={hideMessage} />
+      {notification.visible ? (
+        <Notification msg={notification} hideNotification={hideNotification} />
       ) : null}
 
-      {score.current === score.max ? <WinnerModal /> : null}
+      {score.current === score.max ? (
+        <WinnerModal date={time.date} time={time} />
+      ) : null}
     </div>
   );
 };
