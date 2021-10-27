@@ -6,6 +6,7 @@ import locationData from './web';
 import Header from './components/Header';
 import Menu from './components/Menu';
 import Message from './components/Message';
+import WinnerModal from './components/WinnerModal';
 
 const App = () => {
   const [menu, setMenu] = useState({
@@ -40,6 +41,8 @@ const App = () => {
   }, [menu]);
 
   const toggleMenu = (e) => {
+    if (score.current === score.max) return;
+
     if (!menu.isHidden) {
       setMenu({ ...menu, isHidden: true });
       return;
@@ -149,6 +152,8 @@ const App = () => {
       {selectionMsg.visible ? (
         <Message msg={selectionMsg} hideMessage={hideMessage} />
       ) : null}
+
+      {score.current === score.max ? <WinnerModal /> : null}
     </div>
   );
 };
