@@ -26,25 +26,22 @@ function secToDate(time) {
   return time.toDate();
 }
 
-const app = initializeApp(getFirebaseConfig());
-const db = getFirestore(app);
-const locationData = getCharacters(db);
-
-async function storeData(uid, name, totalTime) {
+async function storeData(uid, name, date, totalTime) {
   setDoc(doc(db, 'leaderboards', uid), {
     totalTime,
     name,
+    date,
   });
 }
 
-function saveGame(name, totalTime) {
+async function saveGame(name, date, totalTime) {
   const auth = getAuth();
   signInAnonymously(auth)
     .then(() => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           const uid = user.uid;
-          storeData(uid, name, totalTime);
+          storeData(uid, name, date, totalTime);
         }
       });
     })
@@ -54,5 +51,9 @@ function saveGame(name, totalTime) {
       console.log(errorCode, errorMessage);
     });
 }
+
+const app = initializeApp(getFirebaseConfig());
+const db = getFirestore(app);
+const locationData = getCharacters(db);
 
 export { locationData, getCurrentTime, secToDate, saveGame };

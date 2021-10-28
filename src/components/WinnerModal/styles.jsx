@@ -14,6 +14,12 @@ const fade = keyframes`
   }
 `;
 
+const spin = keyframes`
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
 export const ModalContainer = styled.div`
   position: fixed;
   min-width: 260px;
@@ -30,6 +36,10 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   animation: ${fade} 0.3s;
+
+  @media (min-width: 400px) {
+    min-width: 350px;
+  }
 `;
 
 export const Title = styled.p`
@@ -48,21 +58,28 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
 `;
 
 export const Legend = styled.legend`
+  position: relative;
   font-size: 1rem;
+  margin-bottom: 0.5rem;
 
   & span {
+    position: absolute;
     color: turquoise;
     font-size: 0.6rem;
     display: block;
+    left: -3rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 `;
 
 export const InputWrapper = styled.div`
   position: relative;
+  width: 100%;
+  background: transparent;
 `;
 
 export const Input = styled.input`
@@ -82,6 +99,17 @@ export const Input = styled.input`
   }
 `;
 
+export const Error = styled.ul`
+  text-align: left;
+  font-size: 0.8rem;
+  list-style: disc;
+  margin: 0.5rem 1rem 1rem;
+
+  & p {
+    margin: 0 -0.8rem 0.5rem;
+  }
+`;
+
 export const Label = styled.label`
   position: absolute;
   left: 0.5rem;
@@ -90,6 +118,7 @@ export const Label = styled.label`
   color: #287ecf;
   transition: 0.2s ease all;
   pointer-events: none;
+  z-index: 1;
 
   ${Input}:placeholder-shown:not(:focus) ~ & {
     left: 50%;
@@ -104,6 +133,7 @@ export const BtnSubmit = styled.button`
   width: 100%;
   font-weight: 600;
   padding: 0.5rem;
+  margin-top: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
   box-shadow: 0 0 2px #000;
@@ -114,6 +144,22 @@ export const BtnSubmit = styled.button`
   &:hover {
     border: 1px solid #ffffff33;
     color: #fff;
+  }
+`;
+
+export const LoadingIcon = styled.svg`
+  animation: ${spin} 0.4s infinite linear;
+`;
+
+export const MsgSuccess = styled.div`
+  margin-top: 1rem;
+
+  & button {
+    background: transparent;
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 1px;
+    cursor: pointer;
   }
 `;
 
