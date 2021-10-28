@@ -1,14 +1,14 @@
 import Scoreboard from '../Scoreboard';
 import * as S from './styles';
 
-const Header = ({ score, toggleLeaderboard }) => {
+const Header = ({ score, toggleHowToPlay, toggleLeaderboard }) => {
   return (
     <S.Header id="header">
       <h1>
         <a href="/">Hidden5</a>
       </h1>
       <S.NavContainer>
-        <S.NavItem>How to play</S.NavItem>
+        <S.NavItem onClick={toggleHowToPlay}>How to play</S.NavItem>
         <S.NavItem onClick={toggleLeaderboard}>Leaderboards</S.NavItem>
         <S.NavItem>
           <a

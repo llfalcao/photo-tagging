@@ -7,24 +7,15 @@ import Header from './components/Header';
 import Menu from './components/Menu';
 import Notification from './components/Notification';
 import WinnerModal from './components/WinnerModal';
+import Help from './components/Help';
 import Leaderboard from './components/Leaderboard/Leaderboard';
 
 const App = () => {
   const [time, setTime] = useState();
-
-  const [menu, setMenu] = useState({
-    characters: characterData,
-    isHidden: true,
-    location: { y: 0, x: 0 },
-    isDisabled: false,
-  });
-
-  const [score, setScore] = useState({
-    current: 0,
-    max: characterData.length,
-  });
-
+  const [score, setScore] = useState({ current: 0, max: characterData.length });
   const [markers, setMarkers] = useState([]);
+  const [leaderboard, setLeaderboard] = useState(false);
+  const [howTo, setHowTo] = useState(false);
 
   const [notification, setNotification] = useState({
     visible: false,
@@ -32,12 +23,12 @@ const App = () => {
     character: '',
   });
 
-  const [leaderboard, setLeaderboard] = useState(false);
-
-  const toggleLeaderboard = () => {
-    setLeaderboard(!leaderboard);
-    window.scrollTo(0, 0);
-  };
+  const [menu, setMenu] = useState({
+    characters: characterData,
+    isHidden: true,
+    location: { y: 0, x: 0 },
+    isDisabled: false,
+  });
 
   // Close menu by pressing Esc
   useEffect(() => {
@@ -63,6 +54,17 @@ const App = () => {
 
     updateRankings();
   }, []);
+
+  const toggleLeaderboard = () => {
+    setLeaderboard(!leaderboard);
+    setHowTo(false);
+    window.scrollTo(0, 0);
+  };
+
+  const toggleHowToPlay = () => {
+    setHowTo(!howTo);
+    setLeaderboard(false);
+  };
 
   // Display or hide the menu by clicking the image
   const toggleMenu = (e) => {
@@ -175,15 +177,22 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header score={score} toggleLeaderboard={toggleLeaderboard} />
+      <Header
+        score={score}
+        toggleLeaderboard={toggleLeaderboard}
+        toggleHowToPlay={toggleHowToPlay}
+      />
+
       <img
         className="bg-image"
         src={bg}
         alt="Artwork with various characters"
         onClick={toggleMenu}
       />
+
       <Menu menu={menu} onMenuItemClick={onMenuItemClick} hideMenu={hideMenu} />
 
+      {howTo ? <Help /> : null}
       {leaderboard ? <Leaderboard /> : null}
 
       {markers.map((mark, i) => (
