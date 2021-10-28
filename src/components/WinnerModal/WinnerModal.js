@@ -1,9 +1,9 @@
 import { useState } from 'react/cjs/react.development';
+import { saveGame } from '../../web';
 import * as S from './styles';
 
 const WinnerModal = ({ time }) => {
   const { total } = time;
-
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(true);
 
@@ -18,7 +18,7 @@ const WinnerModal = ({ time }) => {
     if (!regex.test(name)) {
       // TODO: Show error message under the input field
     } else {
-      // TODO: Save to Firebase
+      saveGame(name, total);
     }
   }
 
@@ -30,12 +30,11 @@ const WinnerModal = ({ time }) => {
     <>
       {visible ? (
         <S.ModalContainer>
-          <S.Title>You win!</S.Title>
+          <S.Title>Great job!</S.Title>
           <S.Subtitle>Total time: {total}</S.Subtitle>
           <S.Form onSubmit={handleSubmit}>
             <S.Legend>
-              Save your game time:
-              <span>(optional)</span>
+              Save your game time: <span>(optional)</span>
             </S.Legend>
 
             <S.InputWrapper>
