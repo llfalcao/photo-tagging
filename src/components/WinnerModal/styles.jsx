@@ -26,6 +26,7 @@ export const ModalContainer = styled.div`
   background: #1a1a1b;
   color: #fff;
   padding: 2rem;
+  text-align: center;
   display: flex;
   flex-direction: column;
   animation: ${fade} 0.3s;
@@ -57,7 +58,6 @@ export const Legend = styled.legend`
     color: turquoise;
     font-size: 0.6rem;
     display: block;
-    text-align: center;
   }
 `;
 
@@ -108,11 +108,12 @@ export const BtnSubmit = styled.button`
   border-radius: 0.25rem;
   box-shadow: 0 0 2px #000;
   background: #287ecf;
-  color: #fff;
+  color: #ffffffcc;
   cursor: pointer;
 
   &:hover {
     border: 1px solid #ffffff33;
+    color: #fff;
   }
 `;
 
