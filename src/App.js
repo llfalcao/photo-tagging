@@ -82,7 +82,7 @@ const App = () => {
     setMenu({ ...menu, isHidden: false, location: { x, y } });
   };
 
-  // Calculates the click position independent of screen resolution
+  // Calculates the click position independent of screen size
   const getOffsetPercentage = () => {
     const { location } = menu;
     const image = document
@@ -113,7 +113,7 @@ const App = () => {
     setMarkers(newMarkers);
   };
 
-  // Parse seconds
+  // Format time before adding it to the database
   const secsToTime = (secs) => {
     const hours = Math.floor(secs / (60 * 60));
     const minutes = Math.floor(secs / 60);
@@ -163,15 +163,14 @@ const App = () => {
       });
   };
 
-  // Close menu by clicking the X button
+  // Close by clicking the X button
   const hideMenu = () => setMenu({ ...menu, isHidden: true });
-
+  const hideHelp = () => setHowTo(false);
+  const hideLeaderboard = () => setLeaderboard(false);
   const hideNotification = () =>
     setNotification({ ...notification, visible: false });
 
-  const hideHelp = () => setHowTo(false);
-  const hideLeaderboard = () => setLeaderboard(false);
-
+  // Update ranking once the user finishes the game
   const updateRankings = () => {
     getLeaderboard().then((data) =>
       localStorage.setItem('ranking', JSON.stringify(data)),
