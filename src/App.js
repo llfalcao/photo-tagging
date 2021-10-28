@@ -169,6 +169,9 @@ const App = () => {
   const hideNotification = () =>
     setNotification({ ...notification, visible: false });
 
+  const hideHelp = () => setHowTo(false);
+  const hideLeaderboard = () => setLeaderboard(false);
+
   const updateRankings = () => {
     getLeaderboard().then((data) =>
       localStorage.setItem('ranking', JSON.stringify(data)),
@@ -192,8 +195,8 @@ const App = () => {
 
       <Menu menu={menu} onMenuItemClick={onMenuItemClick} hideMenu={hideMenu} />
 
-      {howTo ? <Help /> : null}
-      {leaderboard ? <Leaderboard /> : null}
+      {howTo ? <Help hideHelp={hideHelp} /> : null}
+      {leaderboard ? <Leaderboard hideLeaderboard={hideLeaderboard} /> : null}
 
       {markers.map((mark, i) => (
         <svg

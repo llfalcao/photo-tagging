@@ -50,3 +50,18 @@ export const CharacterItem = styled.div`
     filter: drop-shadow(0 4px 2px #000);
   }
 `;
+
+export const BtnCloseMenu = styled.button`
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  width: 20px;
+  height: 20px;
+  margin: 0 0 4px auto;
+  border-radius: 100%;
+  background: none;
+  fill: crimson;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+`;
