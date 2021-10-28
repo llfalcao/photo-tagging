@@ -8,6 +8,9 @@ import {
   collection,
   getFirestore,
   Timestamp,
+  orderBy,
+  query,
+  limit,
 } from 'firebase/firestore';
 
 // Returns list of characters and their respective positions on the image
@@ -28,8 +31,8 @@ function secToDate(time) {
 
 async function storeData(uid, name, date, totalTime) {
   setDoc(doc(db, 'leaderboards', uid), {
-    totalTime,
     name,
+    totalTime,
     date,
   });
 }
@@ -52,8 +55,19 @@ async function saveGame(name, date, totalTime) {
     });
 }
 
+async function getLeaderboard() {
+  const leaderboard = query(
+    collection(db, 'leaderboards'),
+    orderBy('totalTime', 'asc'),
+    limit(10),
+  );
+  const leaderboardSnapshot = await getDocs(leaderboard);
+  const leaderboardList = leaderboardSnapshot.docs.map((doc) => doc.data());
+  return leaderboardList;
+}
+
 const app = initializeApp(getFirebaseConfig());
 const db = getFirestore(app);
 const locationData = getCharacters(db);
 
-export { locationData, getCurrentTime, secToDate, saveGame };
+export { locationData, getCurrentTime, secToDate, saveGame, getLeaderboard };

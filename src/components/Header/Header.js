@@ -1,7 +1,7 @@
 import Scoreboard from '../Scoreboard';
 import * as S from './styles';
 
-const Header = ({ score }) => {
+const Header = ({ score, toggleLeaderboard }) => {
   return (
     <S.Header id="header">
       <h1>
@@ -9,7 +9,7 @@ const Header = ({ score }) => {
       </h1>
       <S.NavContainer>
         <S.NavItem>How to play</S.NavItem>
-        <S.NavItem>Leaderboards</S.NavItem>
+        <S.NavItem onClick={toggleLeaderboard}>Leaderboards</S.NavItem>
         <S.NavItem>
           <a
             href="https://github.com/llfalcao/photo-tagging"

@@ -1,8 +1,8 @@
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 import { saveGame } from '../../web';
 import * as S from './styles';
 
-const WinnerModal = ({ time, loadLeaderboards }) => {
+const WinnerModal = ({ time, toggleLeaderboard, updateRankings }) => {
   const { date, total } = time;
   const formattedDate = date.toISOString().substring(0, 10);
   const [name, setName] = useState('');
@@ -27,6 +27,7 @@ const WinnerModal = ({ time, loadLeaderboards }) => {
         setInputError(false);
         setLoading(false);
         setIsSaved(true);
+        updateRankings();
       });
     }
   }
@@ -112,7 +113,13 @@ const WinnerModal = ({ time, loadLeaderboards }) => {
             <S.MsgSuccess>
               <p>
                 All done! You can{' '}
-                <button type="button" onClick={loadLeaderboards}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    toggleLeaderboard();
+                    setVisible(false);
+                  }}
+                >
                   view your ranking here.
                 </button>
               </p>

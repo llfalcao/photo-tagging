@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import bg from './assets/images/bg.jpg';
 import characterData from './assets/data';
-import { locationData, getCurrentTime, secToDate } from './web';
+import { locationData, getCurrentTime, secToDate, getLeaderboard } from './web';
 import Header from './components/Header';
 import Menu from './components/Menu';
 import Notification from './components/Notification';
 import WinnerModal from './components/WinnerModal';
+import Leaderboard from './components/Leaderboard/Leaderboard';
 
 const App = () => {
   const [time, setTime] = useState();
@@ -31,6 +32,13 @@ const App = () => {
     character: '',
   });
 
+  const [leaderboard, setLeaderboard] = useState(false);
+
+  const toggleLeaderboard = () => {
+    setLeaderboard(!leaderboard);
+    window.scrollTo(0, 0);
+  };
+
   // Close menu by pressing Esc
   useEffect(() => {
     const close = (e) => {
@@ -43,6 +51,7 @@ const App = () => {
   }, [menu]);
 
   // Set initial time and date when the game starts
+  // Also load rankings from Firebase
   useEffect(() => {
     const timestamp = getCurrentTime();
     setTime({
@@ -51,6 +60,8 @@ const App = () => {
       date: secToDate(timestamp),
       total: 0,
     });
+
+    updateRankings();
   }, []);
 
   // Display or hide the menu by clicking the image
@@ -113,9 +124,7 @@ const App = () => {
     return obj;
   };
 
-  const formatTime = (obj) => {
-    return `${obj.h}:${obj.m}:${obj.s}`;
-  };
+  const formatTime = (obj) => `${obj.h}:${obj.m}:${obj.s}`;
 
   // Handle character selection from the menu
   const onMenuItemClick = (id, name) => {
@@ -153,17 +162,20 @@ const App = () => {
   };
 
   // Close menu by clicking the X button
-  const hideMenu = () => {
-    setMenu({ ...menu, isHidden: true });
-  };
+  const hideMenu = () => setMenu({ ...menu, isHidden: true });
 
-  const hideNotification = () => {
+  const hideNotification = () =>
     setNotification({ ...notification, visible: false });
+
+  const updateRankings = () => {
+    getLeaderboard().then((data) =>
+      localStorage.setItem('ranking', JSON.stringify(data)),
+    );
   };
 
   return (
     <div className="App">
-      <Header score={score} />
+      <Header score={score} toggleLeaderboard={toggleLeaderboard} />
       <img
         className="bg-image"
         src={bg}
@@ -171,6 +183,8 @@ const App = () => {
         onClick={toggleMenu}
       />
       <Menu menu={menu} onMenuItemClick={onMenuItemClick} hideMenu={hideMenu} />
+
+      {leaderboard ? <Leaderboard /> : null}
 
       {markers.map((mark, i) => (
         <svg
@@ -195,7 +209,11 @@ const App = () => {
       ) : null}
 
       {score.current === score.max ? (
-        <WinnerModal date={time.date} time={time} />
+        <WinnerModal
+          time={time}
+          toggleLeaderboard={toggleLeaderboard}
+          updateRankings={updateRankings}
+        />
       ) : null}
     </div>
   );
