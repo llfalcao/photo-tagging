@@ -5,9 +5,10 @@ const Menu = (props) => {
 
   return (
     <S.MenuContainer
+      id="menu"
       style={{
-        top: menu.location.y,
-        left: menu.location.x,
+        top: menu.location.y - menu.offset.y,
+        left: menu.location.x - menu.offset.x,
         display: menu.isDisabled || menu.isHidden ? 'none' : 'block',
       }}
     >

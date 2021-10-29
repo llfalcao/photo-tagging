@@ -27,6 +27,7 @@ const App = () => {
     characters: characterData,
     isHidden: true,
     location: { y: 0, x: 0 },
+    offset: { y: 0, x: 0 },
     isDisabled: false,
   });
 
@@ -76,10 +77,24 @@ const App = () => {
     }
     const rect = e.target.getBoundingClientRect();
     const headerOffset = document.getElementById('header').scrollHeight;
-    const x = e.clientX - rect.left;
+    const x = e.clientX;
     const y = e.clientY + headerOffset - rect.top;
+    // Prevent menu from overflowing
+    let offsetX = 0;
+    let offsetY = 0;
 
-    setMenu({ ...menu, isHidden: false, location: { x, y } });
+    if (window.innerWidth - x < 183) {
+      offsetX = 190;
+    } else if (window.innerHeight - y < 218) {
+      offsetY = 230;
+    }
+
+    setMenu({
+      ...menu,
+      isHidden: false,
+      location: { x, y },
+      offset: { x: offsetX, y: offsetY },
+    });
   };
 
   // Calculates the click position independent of screen size
@@ -88,11 +103,11 @@ const App = () => {
     const image = document
       .getElementsByClassName('bg-image')[0]
       .getBoundingClientRect();
+    const headerOffset = document.getElementById('header').scrollHeight;
+    const x = ((location.x * 100) / image.width).toFixed(1);
+    const y = (((location.y - headerOffset) * 100) / image.height).toFixed(1);
 
-    return [
-      Math.round((location.x * 100) / image.width),
-      Math.round((location.y * 100) / image.height),
-    ];
+    return [x, y];
   };
 
   // Remove character from the list once found
@@ -107,9 +122,9 @@ const App = () => {
   };
 
   // Display marker above characters found
-  const markCharacter = (x, y) => {
+  const markCharacter = (coord) => {
     const newMarkers = [...markers];
-    newMarkers.push([x, y]);
+    newMarkers.push([coord.x, coord.y]);
     setMarkers(newMarkers);
   };
 
@@ -146,9 +161,10 @@ const App = () => {
       .then((result) => {
         if (result.length > 0) {
           const { current, max } = score;
+          const { location } = menu;
           setScore({ ...score, current: current + 1 });
           updateCharacterList(current, max, id);
-          markCharacter(x, y);
+          markCharacter(location);
           setNotification({ visible: true, isCorrect: true, character: name });
           if (current + 1 === max) {
             const endTime = getCurrentTime().seconds;
@@ -204,8 +220,8 @@ const App = () => {
             position: 'absolute',
             fill: 'green',
             stroke: 'white',
-            left: `calc(${mark[0]}% - 1vw)`,
-            top: `calc(${mark[1]}% - 4vh)`,
+            left: mark[0],
+            top: mark[1],
             width: '4vw',
           }}
           xmlns="http://www.w3.org/2000/svg"
