@@ -61,18 +61,13 @@ export const Form = styled.form`
 `;
 
 export const Legend = styled.legend`
-  position: relative;
   font-size: 1rem;
   margin-bottom: 0.5rem;
 
   & span {
-    position: absolute;
     color: turquoise;
     font-size: 0.6rem;
     display: block;
-    left: -3rem;
-    top: 50%;
-    transform: translateY(-50%);
   }
 `;
 

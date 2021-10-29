@@ -6,14 +6,13 @@ const slide = keyframes`
     opacity: 0;
   }
   to {
-    top: 5rem;
+    top: 19vh;
     opacity: 1;
   }
 `;
 
 export const Container = styled.div`
   position: absolute;
-  top: 75px;
   left: 50%;
   transform: translateX(-50%);
   min-width: 280px;
@@ -22,10 +21,14 @@ export const Container = styled.div`
   color: #eee;
   padding: 1rem;
   box-shadow: 0 0 5px #000;
-  animation: ${slide} 0.3s;
+  animation: ${slide} 0.3s forwards;
 
   & p {
     margin: 0.5rem 0;
+  }
+
+  @media (max-width: 600px) {
+    width: 90%;
   }
 `;
 

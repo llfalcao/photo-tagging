@@ -6,28 +6,35 @@ const slide = keyframes`
     opacity: 0;
   }
   to {
-    top: 5rem;
+    top: 19vh;
     opacity: 1;
   }
 `;
 
 export const TableContainer = styled.div`
   position: absolute;
-  top: 75px;
   left: 50%;
   transform: translateX(-50%);
   padding-top: 3rem;
   border-radius: 0.5rem;
   box-shadow: 0 0 5px #000;
   background: #101112;
-  animation: ${slide} 0.3s;
+  animation: ${slide} 0.3s forwards;
   overflow: hidden;
   color: #fff;
   text-align: center;
+
+  @media (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 export const Table = styled.table`
   border-collapse: collapse;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const TableRow = styled.tr`
@@ -48,6 +55,10 @@ export const TableHeader = styled.th`
 
   &:last-child {
     border-right: none;
+  }
+
+  @media (max-width: 600px) {
+    padding: 0.5rem 0;
   }
 `;
 
