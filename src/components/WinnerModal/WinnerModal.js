@@ -65,6 +65,10 @@ const WinnerModal = ({ time, toggleLeaderboard, updateRankings }) => {
                 <li>No more than 32 characters</li>
                 <li>No space at the beginning or at the end</li>
                 <li>At most one space between names/words</li>
+                <li>
+                  No special characters except for dash ( - ) and underscore ( _
+                  )
+                </li>
               </S.Error>
             ) : null}
 
