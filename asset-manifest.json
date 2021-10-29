@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/photo-tagging/static/css/main.d8d06610.chunk.css",
-    "main.js": "/photo-tagging/static/js/main.3c07cd43.chunk.js",
-    "main.js.map": "/photo-tagging/static/js/main.3c07cd43.chunk.js.map",
+    "main.js": "/photo-tagging/static/js/main.3867ea67.chunk.js",
+    "main.js.map": "/photo-tagging/static/js/main.3867ea67.chunk.js.map",
     "runtime-main.js": "/photo-tagging/static/js/runtime-main.473247af.js",
     "runtime-main.js.map": "/photo-tagging/static/js/runtime-main.473247af.js.map",
     "static/js/2.15107bd9.chunk.js": "/photo-tagging/static/js/2.15107bd9.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.473247af.js",
     "static/js/2.15107bd9.chunk.js",
     "static/css/main.d8d06610.chunk.css",
-    "static/js/main.3c07cd43.chunk.js"
+    "static/js/main.3867ea67.chunk.js"
   ]
 }
