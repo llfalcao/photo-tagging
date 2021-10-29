@@ -82,10 +82,10 @@ const App = () => {
     // Prevent menu from overflowing
     let offsetX = 0;
     let offsetY = 0;
-
-    if (window.innerWidth - x < 183) {
+    if (window.innerWidth - e.clientX < 183) {
       offsetX = 190;
-    } else if (window.innerHeight - y < 218) {
+    }
+    if (window.innerHeight - e.clientY < 218) {
       offsetY = 230;
     }
 
