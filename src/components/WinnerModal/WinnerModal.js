@@ -119,8 +119,9 @@ const WinnerModal = ({ time, toggleLeaderboard, updateRankings }) => {
                 All done! You can{' '}
                 <button
                   type="button"
-                  onClick={() => {
-                    toggleLeaderboard();
+                  onClick={async () => {
+                    await updateRankings();
+                    await toggleLeaderboard();
                     setVisible(false);
                   }}
                 >
