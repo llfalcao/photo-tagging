@@ -57,13 +57,18 @@ const App = () => {
     });
   }, []);
 
-  const toggleLeaderboard = async (gameEnded) => {
-    getLeaderboard().then((data) =>
-      setLeaderboard({
-        visible: gameEnded ? true : !leaderboard.visible,
-        ranking: data,
-      }),
-    );
+  const toggleLeaderboard = async () => {
+    if (leaderboard.visible) {
+      setLeaderboard({ ...leaderboard, visible: false });
+    } else {
+      getLeaderboard().then((data) =>
+        setLeaderboard({
+          visible: true,
+          ranking: data,
+        }),
+      );
+    }
+
     setHowTo(false);
     window.scrollTo(0, 0);
   };

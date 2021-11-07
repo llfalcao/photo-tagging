@@ -15,7 +15,7 @@ const Header = ({ score, toggleHowToPlay, toggleLeaderboard }) => {
           <img src={help} alt="How to play" />
           How to play
         </S.NavItem>
-        <S.NavItem onClick={() => toggleLeaderboard()}>
+        <S.NavItem onClick={toggleLeaderboard}>
           <img src={leaderboard} alt="Leaderboards" />
           Leaderboards
         </S.NavItem>

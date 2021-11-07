@@ -119,7 +119,7 @@ const WinnerModal = ({ time, toggleLeaderboard }) => {
                 <button
                   type="button"
                   onClick={async () => {
-                    await toggleLeaderboard(true);
+                    await toggleLeaderboard();
                     setVisible(false);
                   }}
                 >
