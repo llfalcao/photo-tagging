@@ -1,17 +1,6 @@
-import { useEffect, useState } from 'react';
 import * as S from './styles';
 
-const Leaderboard = ({ hideLeaderboard }) => {
-  const [rankings, setRankings] = useState([]);
-
-  useEffect(() => {
-    let rankingData = localStorage.getItem('ranking');
-    if (rankingData !== null) {
-      rankingData = JSON.parse(rankingData);
-      setRankings(rankingData);
-    }
-  }, []);
-
+const Leaderboard = ({ hideLeaderboard, ranking }) => {
   return (
     <S.TableContainer>
       <S.Table>
@@ -24,7 +13,7 @@ const Leaderboard = ({ hideLeaderboard }) => {
         </S.TableHead>
 
         <tbody>
-          {rankings.map((user) => (
+          {ranking.map((user) => (
             <S.TableRow key={user.name}>
               <S.TableData>{user.name}</S.TableData>
               <S.TableData>{user.totalTime}</S.TableData>

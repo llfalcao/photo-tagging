@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { saveGame } from '../../web';
 import * as S from './styles';
 
-const WinnerModal = ({ time, toggleLeaderboard, updateRankings }) => {
+const WinnerModal = ({ time, toggleLeaderboard }) => {
   const { date, total } = time;
   const formattedDate = date.toISOString().substring(0, 10);
   const [name, setName] = useState('');
@@ -27,7 +27,6 @@ const WinnerModal = ({ time, toggleLeaderboard, updateRankings }) => {
         setInputError(false);
         setLoading(false);
         setIsSaved(true);
-        updateRankings();
       });
     }
   }
@@ -120,8 +119,7 @@ const WinnerModal = ({ time, toggleLeaderboard, updateRankings }) => {
                 <button
                   type="button"
                   onClick={async () => {
-                    await updateRankings();
-                    await toggleLeaderboard();
+                    await toggleLeaderboard(true);
                     setVisible(false);
                   }}
                 >

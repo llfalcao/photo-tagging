@@ -8,13 +8,16 @@ import Menu from './components/Menu';
 import Notification from './components/Notification';
 import WinnerModal from './components/WinnerModal';
 import Help from './components/Help';
-import Leaderboard from './components/Leaderboard/Leaderboard';
+import Leaderboard from './components/Leaderboard';
 
 const App = () => {
   const [time, setTime] = useState();
   const [score, setScore] = useState({ current: 0, max: characterData.length });
   const [markers, setMarkers] = useState([]);
-  const [leaderboard, setLeaderboard] = useState(false);
+  const [leaderboard, setLeaderboard] = useState({
+    visible: false,
+    ranking: [],
+  });
   const [howTo, setHowTo] = useState(false);
 
   const [notification, setNotification] = useState({
@@ -52,19 +55,22 @@ const App = () => {
       date: secToDate(timestamp),
       total: 0,
     });
-
-    updateRankings();
   }, []);
 
-  const toggleLeaderboard = () => {
-    setLeaderboard(!leaderboard);
+  const toggleLeaderboard = async (gameEnded) => {
+    getLeaderboard().then((data) =>
+      setLeaderboard({
+        visible: gameEnded ? true : !leaderboard.visible,
+        ranking: data,
+      }),
+    );
     setHowTo(false);
     window.scrollTo(0, 0);
   };
 
   const toggleHowToPlay = () => {
     setHowTo(!howTo);
-    setLeaderboard(false);
+    setLeaderboard({ ...leaderboard, visible: false });
   };
 
   // Display or hide the menu by clicking the image
@@ -182,16 +188,10 @@ const App = () => {
   // Close by clicking the X button
   const hideMenu = () => setMenu({ ...menu, isHidden: true });
   const hideHelp = () => setHowTo(false);
-  const hideLeaderboard = () => setLeaderboard(false);
+  const hideLeaderboard = () =>
+    setLeaderboard({ ...leaderboard, visible: false });
   const hideNotification = () =>
     setNotification({ ...notification, visible: false });
-
-  // Update ranking once the user finishes the game
-  const updateRankings = () => {
-    getLeaderboard().then((data) =>
-      localStorage.setItem('ranking', JSON.stringify(data)),
-    );
-  };
 
   return (
     <div className="App">
@@ -211,7 +211,12 @@ const App = () => {
       <Menu menu={menu} onMenuItemClick={onMenuItemClick} hideMenu={hideMenu} />
 
       {howTo ? <Help hideHelp={hideHelp} /> : null}
-      {leaderboard ? <Leaderboard hideLeaderboard={hideLeaderboard} /> : null}
+      {leaderboard.visible ? (
+        <Leaderboard
+          hideLeaderboard={hideLeaderboard}
+          ranking={leaderboard.ranking}
+        />
+      ) : null}
 
       {markers.map((mark, i) => (
         <svg
@@ -236,11 +241,7 @@ const App = () => {
       ) : null}
 
       {score.current === score.max ? (
-        <WinnerModal
-          time={time}
-          toggleLeaderboard={toggleLeaderboard}
-          updateRankings={updateRankings}
-        />
+        <WinnerModal time={time} toggleLeaderboard={toggleLeaderboard} />
       ) : null}
     </div>
   );
