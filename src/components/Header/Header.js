@@ -8,7 +8,7 @@ const Header = ({ score, toggleHowToPlay, toggleLeaderboard }) => {
   return (
     <S.Header id="header">
       <h1>
-        <a href="/">Hidden5</a>
+        <a href="/photo-tagging">Hidden5</a>
       </h1>
       <S.NavContainer>
         <S.NavItem onClick={toggleHowToPlay}>
