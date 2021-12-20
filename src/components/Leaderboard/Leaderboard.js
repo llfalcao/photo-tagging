@@ -3,9 +3,13 @@ import * as S from './styles';
 const Leaderboard = ({ hideLeaderboard, ranking }) => {
   return (
     <S.TableContainer>
+      <h2 style={{ marginBottom: '1rem', marginTop: '-2rem' }}>
+        Leaderboards - Top 20
+      </h2>
       <S.Table>
         <S.TableHead>
           <S.TableRow>
+            <S.TableHeader>#</S.TableHeader>
             <S.TableHeader>Name</S.TableHeader>
             <S.TableHeader>Time</S.TableHeader>
             <S.TableHeader>Date</S.TableHeader>
@@ -13,8 +17,9 @@ const Leaderboard = ({ hideLeaderboard, ranking }) => {
         </S.TableHead>
 
         <tbody>
-          {ranking.map((user) => (
+          {ranking.map((user, i) => (
             <S.TableRow key={user.name}>
+              <S.TableData>{i + 1}</S.TableData>
               <S.TableData>{user.name}</S.TableData>
               <S.TableData>{user.totalTime}</S.TableData>
               <S.TableData>{user.date}</S.TableData>

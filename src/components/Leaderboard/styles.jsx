@@ -53,6 +53,10 @@ export const TableHeader = styled.th`
   padding: 0.5rem 5rem;
   border-right: 1px solid #222;
 
+  &:first-child {
+    padding: 0.5rem 1rem;
+  }
+
   &:last-child {
     border-right: none;
   }
