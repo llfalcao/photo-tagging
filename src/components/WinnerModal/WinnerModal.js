@@ -118,10 +118,9 @@ const WinnerModal = ({ time, toggleLeaderboard }) => {
                 All done! You can{' '}
                 <button
                   type="button"
-                  onClick={async () => {
-                    await toggleLeaderboard();
-                    setVisible(false);
-                  }}
+                  onClick={(e) =>
+                    toggleLeaderboard(e, true).then(() => setVisible(false))
+                  }
                 >
                   view your ranking here.
                 </button>

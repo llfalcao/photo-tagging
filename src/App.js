@@ -57,16 +57,16 @@ const App = () => {
     });
   }, []);
 
-  const toggleLeaderboard = async () => {
-    if (leaderboard.visible) {
-      setLeaderboard({ ...leaderboard, visible: false });
-    } else {
+  const toggleLeaderboard = async (e, reload) => {
+    if (reload || !leaderboard.visible) {
       getLeaderboard().then((data) =>
         setLeaderboard({
           visible: true,
           ranking: data,
         }),
       );
+    } else {
+      setLeaderboard({ ...leaderboard, visible: false });
     }
 
     setHowTo(false);
