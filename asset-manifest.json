@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/photo-tagging/static/css/main.d8d06610.chunk.css",
-    "main.js": "/photo-tagging/static/js/main.7eb4b46c.chunk.js",
-    "main.js.map": "/photo-tagging/static/js/main.7eb4b46c.chunk.js.map",
+    "main.js": "/photo-tagging/static/js/main.a13c972f.chunk.js",
+    "main.js.map": "/photo-tagging/static/js/main.a13c972f.chunk.js.map",
     "runtime-main.js": "/photo-tagging/static/js/runtime-main.473247af.js",
     "runtime-main.js.map": "/photo-tagging/static/js/runtime-main.473247af.js.map",
-    "static/js/2.c10a8adb.chunk.js": "/photo-tagging/static/js/2.c10a8adb.chunk.js",
-    "static/js/2.c10a8adb.chunk.js.map": "/photo-tagging/static/js/2.c10a8adb.chunk.js.map",
+    "static/js/2.5c4d5956.chunk.js": "/photo-tagging/static/js/2.5c4d5956.chunk.js",
+    "static/js/2.5c4d5956.chunk.js.map": "/photo-tagging/static/js/2.5c4d5956.chunk.js.map",
     "index.html": "/photo-tagging/index.html",
     "static/css/main.d8d06610.chunk.css.map": "/photo-tagging/static/css/main.d8d06610.chunk.css.map",
-    "static/js/2.c10a8adb.chunk.js.LICENSE.txt": "/photo-tagging/static/js/2.c10a8adb.chunk.js.LICENSE.txt",
+    "static/js/2.5c4d5956.chunk.js.LICENSE.txt": "/photo-tagging/static/js/2.5c4d5956.chunk.js.LICENSE.txt",
     "static/media/bg.dd4f281e.jpg": "/photo-tagging/static/media/bg.dd4f281e.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.473247af.js",
-    "static/js/2.c10a8adb.chunk.js",
+    "static/js/2.5c4d5956.chunk.js",
     "static/css/main.d8d06610.chunk.css",
-    "static/js/main.7eb4b46c.chunk.js"
+    "static/js/main.a13c972f.chunk.js"
   ]
 }
