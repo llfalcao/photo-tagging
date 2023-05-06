@@ -59,7 +59,7 @@ async function getLeaderboard() {
   const leaderboard = query(
     collection(db, 'leaderboards'),
     orderBy('totalTime', 'asc'),
-    limit(20),
+    limit(25),
   );
   const leaderboardSnapshot = await getDocs(leaderboard);
   const leaderboardList = leaderboardSnapshot.docs.map((doc) => doc.data());

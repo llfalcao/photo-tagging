@@ -4,7 +4,7 @@ const Leaderboard = ({ hideLeaderboard, ranking }) => {
   return (
     <S.TableContainer>
       <h2 style={{ marginBottom: '1rem', marginTop: '-2rem' }}>
-        Leaderboards - Top 20
+        Leaderboards - Top 25
       </h2>
       <S.Table>
         <S.TableHead>
